@@ -23,102 +23,6 @@ USE master;
 IF NOT EXISTS (
 		SELECT loginname
 		FROM master.dbo.syslogins
-		WHERE NAME = 'BASE\ctrlb'
-		)
-	CREATE LOGIN [BASE\ctrlb]
-	FROM WINDOWS WITH DEFAULT_DATABASE = [master]
-		,DEFAULT_LANGUAGE = [us_english];
-
-ALTER SERVER ROLE [sysadmin] ADD MEMBER [BASE\ctrlb];
-
-USE master;
-
-GRANT CONNECT SQL
-	TO [BASE\ctrlb] AS [sa];
-
-USE [locations];
-
-CREATE USER [dbo]
-FOR LOGIN [BASE\ctrlb]
-WITH DEFAULT_SCHEMA = [dbo];
-
-USE master;
-
-IF NOT EXISTS (
-		SELECT loginname
-		FROM master.dbo.syslogins
-		WHERE NAME = 'BASE\developers'
-		)
-	CREATE LOGIN [BASE\developers]
-	FROM WINDOWS WITH DEFAULT_DATABASE = [master]
-		,DEFAULT_LANGUAGE = [us_english];
-
-ALTER SERVER ROLE [sysadmin] ADD MEMBER [BASE\developers];
-
-USE master;
-
-GRANT CONNECT SQL
-	TO [BASE\developers] AS [sa];
-
-USE master;
-
-IF NOT EXISTS (
-		SELECT loginname
-		FROM master.dbo.syslogins
-		WHERE NAME = 'BASE\powershell'
-		)
-	CREATE LOGIN [BASE\powershell]
-	FROM WINDOWS WITH DEFAULT_DATABASE = [master]
-		,DEFAULT_LANGUAGE = [us_english];
-
-ALTER SERVER ROLE [sysadmin] ADD MEMBER [BASE\powershell];
-
-USE master;
-
-GRANT CONNECT SQL
-	TO [BASE\powershell] AS [sa];
-
-USE [dbOrphanUsers];
-
-CREATE USER [BASE\powershell]
-FOR LOGIN [BASE\powershell]
-WITH DEFAULT_SCHEMA = [dbo];
-
-GRANT CONNECT
-	TO [BASE\powershell] AS [dbo];
-
-USE master;
-
-IF NOT EXISTS (
-		SELECT loginname
-		FROM master.dbo.syslogins
-		WHERE NAME = 'BASE\sqlserver'
-		)
-	CREATE LOGIN [BASE\sqlserver]
-	FROM WINDOWS WITH DEFAULT_DATABASE = [master]
-		,DEFAULT_LANGUAGE = [us_english];
-
-USE master;
-
-GRANT CONNECT SQL
-	TO [BASE\sqlserver] AS [sa];
-
-USE [dbareports];
-
-CREATE USER [base\sqlserver]
-FOR LOGIN [BASE\sqlserver]
-WITH DEFAULT_SCHEMA = [dbo];
-
-ALTER ROLE [db_owner] ADD MEMBER [BASE\sqlserver];
-
-GRANT CONNECT
-	TO [BASE\sqlserver] AS [dbo];
-
-USE master;
-
-IF NOT EXISTS (
-		SELECT loginname
-		FROM master.dbo.syslogins
 		WHERE NAME = 'claudio'
 		)
 	CREATE LOGIN [claudio]
@@ -128,8 +32,6 @@ IF NOT EXISTS (
 			,CHECK_POLICY = OFF
 			,CHECK_EXPIRATION = OFF
 			,DEFAULT_LANGUAGE = [us_english];
-
-ALTER SERVER ROLE [sysadmin] ADD MEMBER [claudio];
 
 USE master;
 
@@ -141,9 +43,9 @@ USE master;
 IF NOT EXISTS (
 		SELECT loginname
 		FROM master.dbo.syslogins
-		WHERE NAME = 'poo'
+		WHERE NAME = 'port'
 		)
-	CREATE LOGIN [poo]
+	CREATE LOGIN [port]
 		WITH PASSWORD = 0x0100AD1724083AE1A9F1EACB5D11AF84F02381997BF04C5E08A8 HASHED
 			,SID = 0xCDE7FE91A1C4E2439EB8CB47A8E8659B
 			,DEFAULT_DATABASE = [master]
@@ -154,7 +56,7 @@ IF NOT EXISTS (
 USE master;
 
 GRANT CONNECT SQL
-	TO [poo] AS [sa];
+	TO [port] AS [sa];
 
 USE master;
 
@@ -215,9 +117,3 @@ USE master;
 
 GRANT CONNECT SQL
 	TO [UserNOTOrphan] AS [sa];
-
-USE [dbOrphanUsers];
-
-CREATE USER [dbo]
-FOR LOGIN [UserNOTOrphan]
-WITH DEFAULT_SCHEMA = [dbo]
