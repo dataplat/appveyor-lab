@@ -117,3 +117,8 @@ USE master;
 
 GRANT CONNECT SQL
 	TO [UserNOTOrphan] AS [sa];
+	
+	IF NOT EXISTS (SELECT loginname FROM master.dbo.syslogins WHERE name = 'tester') CREATE LOGIN [tester] WITH PASSWORD = 0x0100FD84FB28C12D6A960F46A8902E13F1815FB8C8356534F103 HASHED, SID = 0x7FF6B59A01F45B428231994CEBB82C75, DEFAULT_DATABASE = [tempdb], CHECK_POLICY = OFF, CHECK_EXPIRATION = OFF, DEFAULT_LANGUAGE = [Français]
+;
+EXEC master..sp_addsrvrolemember @loginame = N'ToMigrate', @rolename = N'sysadmin'
+
